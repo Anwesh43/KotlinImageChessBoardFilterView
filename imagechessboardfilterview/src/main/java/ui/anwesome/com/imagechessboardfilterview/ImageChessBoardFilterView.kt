@@ -103,4 +103,27 @@ class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             }
         }
     }
+    data class Renderer(var view:ImageChessBoardFilterView,var time:Int = 0) {
+        val animator = Animator(view)
+        var container:ChessBoardSquareContainer ?= null
+        fun render(canvas:Canvas,paint:Paint) {
+            if(time == 0) {
+                val w= canvas.width.toFloat()
+                container = ChessBoardSquareContainer(view.bitmap,w)
+            }
+            canvas.drawColor(Color.parseColor("#212121"))
+            container?.draw(canvas,paint)
+            time++
+            animator.animate {
+                container?.update {
+                    animator.stop()
+                }
+            }
+        }
+        fun handleTap() {
+            container?.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
