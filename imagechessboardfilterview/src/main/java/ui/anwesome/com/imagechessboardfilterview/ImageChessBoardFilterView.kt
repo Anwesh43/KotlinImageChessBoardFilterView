@@ -25,14 +25,14 @@ class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
     }
     data class ChessBoardSquare(var i:Int) {
         fun draw(canvas:Canvas,paint:Paint,w:Float,scale:Float) {
-            var color = Color.parseColor("#99FFFFFF")
-            if(i%2 == 0) {
-                color = Color.parseColor("#99000000")
+            var color = Color.parseColor("#AAFFFFFF")
+            if((i%8+i/8)%2 == 0) {
+                color = Color.parseColor("#AA000000")
             }
             paint.color = color
             val size = w/8
-            val x = (i%w)*size
-            val y = (i/w.toInt())*size
+            val x = (i%8)*size
+            val y = ((i/8))*size
             canvas.save()
             val updating_size = (size/2)*scale
             canvas.translate(x,y)
