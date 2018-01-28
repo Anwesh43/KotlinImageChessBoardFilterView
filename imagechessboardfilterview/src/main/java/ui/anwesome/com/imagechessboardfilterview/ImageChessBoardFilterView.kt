@@ -3,6 +3,7 @@ package ui.anwesome.com.imagechessboardfilterview
 /**
  * Created by anweshmishra on 29/01/18.
  */
+import android.app.Activity
 import android.graphics.*
 import android.view.*
 import android.content.*
@@ -124,6 +125,13 @@ class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             container?.startUpdating {
                 animator.start()
             }
+        }
+    }
+    companion object {
+        fun create(activity:Activity,bitmap:Bitmap):ImageChessBoardFilterView {
+            val view = ImageChessBoardFilterView(activity,bitmap)
+            activity.setContentView(view)
+            return view
         }
     }
 }
