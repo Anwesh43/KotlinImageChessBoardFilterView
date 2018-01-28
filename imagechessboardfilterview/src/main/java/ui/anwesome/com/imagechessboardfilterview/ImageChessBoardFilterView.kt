@@ -40,24 +40,25 @@ class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
     }
     data class ChessBoardSquareContainer(var bitmap:Bitmap,var w:Float) {
         val squares:ConcurrentLinkedQueue<ChessBoardSquare> = ConcurrentLinkedQueue()
+        val state = ChessBoardSquareState()
         init {
             for(i in 0..63) {
                 squares.add(ChessBoardSquare(i))
             }
-            bitmap = Bitmap.createScaledBitmap(bitmap,w.toInt(),w.toInt())
+            bitmap = Bitmap.createScaledBitmap(bitmap,w.toInt(),w.toInt(),true)
         }
         fun draw(canvas:Canvas,paint:Paint) {
             paint.color = Color.BLACK
             canvas.drawBitmap(bitmap,0f,0f,paint)
             squares.forEach {
-                it.draw(canvas,paint)
+                it.draw(canvas,paint,w,state.scale)
             }
         }
         fun update(stopcb:(Float)->Unit) {
-
+            state.update(stopcb)
         }
         fun startUpdating(startcb:()->Unit) {
-
+            state.startUpdating(startcb)
         }
     }
     data class ChessBoardSquareState(var scale:Float = 0f,var dir:Float = 0f,var prevScale:Float = 0f) {
