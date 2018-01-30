@@ -99,4 +99,27 @@ class AlternateChessBoardView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             }
         }
     }
+    data class AlternateChessBoardRenderer(var view:AlternateChessBoardView, var time:Int = 0) {
+        var image:AlternateChessSquareImage?=null
+        val animator = AlternateChessBoardAnimator(view)
+        fun render(canvas:Canvas,paint:Paint) {
+            if(time == 0) {
+                val w = canvas.width.toFloat()
+                image = AlternateChessSquareImage(view.bitmap,w)
+            }
+            canvas.drawColor(Color.parseColor("#212121"))
+            image?.draw(canvas,paint)
+            time++
+            animator.animate {
+                image?.update {
+                    animator.stop()
+                }
+            }
+        }
+        fun handleTap() {
+            image?.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
