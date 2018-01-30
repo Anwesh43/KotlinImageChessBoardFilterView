@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/KotlinImageChessBoardFilterView.iml" filepath="$PROJECT_DIR$/KotlinImageChessBoardFilterView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alternatechessboardview/alternatechessboardview.iml" filepath="$PROJECT_DIR$/alternatechessboardview/alternatechessboardview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/imagechessboardfilterview/imagechessboardfilterview.iml" filepath="$PROJECT_DIR$/imagechessboardfilterview/imagechessboardfilterview.iml" />
     </modules>
