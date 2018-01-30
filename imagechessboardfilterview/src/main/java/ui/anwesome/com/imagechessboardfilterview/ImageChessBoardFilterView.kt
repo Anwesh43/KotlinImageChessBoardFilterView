@@ -12,8 +12,12 @@ import java.util.concurrent.ConcurrentLinkedQueue
 class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
     val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     val renderer = Renderer(this)
+    var onChessBoardFilterListener:OnChessBoardFilterListener?=null
     override fun onDraw(canvas:Canvas) {
         renderer.render(canvas,paint)
+    }
+    fun addOnChessBoardListener(onOpenListener:()->Unit,onCloseListener:()->Unit) {
+        onChessBoardFilterListener = OnChessBoardFilterListener(onOpenListener,onCloseListener)
     }
     override fun onTouchEvent(event:MotionEvent):Boolean {
         when(event.action) {
@@ -125,8 +129,12 @@ class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             container?.draw(canvas,paint)
             time++
             animator.animate {
-                container?.update {
+                container?.update { it ->
                     animator.stop()
+                    when(it) {
+                        0f -> view.onChessBoardFilterListener?.onCloseListener?.invoke()
+                        1f -> view.onChessBoardFilterListener?.onOpenListener?.invoke()
+                    }
                 }
             }
         }
@@ -136,6 +144,7 @@ class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             }
         }
     }
+    data class OnChessBoardFilterListener(var onOpenListener:()->Unit,var onCloseListener:()->Unit)
     companion object {
         fun create(activity:Activity,bitmap:Bitmap):ImageChessBoardFilterView {
             val view = ImageChessBoardFilterView(activity,bitmap)
