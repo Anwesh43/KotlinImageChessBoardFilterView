@@ -43,6 +43,7 @@ class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
     data class ChessBoardSquareContainer(var bitmap:Bitmap,var w:Float) {
         val squares:ConcurrentLinkedQueue<ChessBoardSquare> = ConcurrentLinkedQueue()
         val state = ChessBoardSquareState()
+        var pieArc = PieArc(w/2,w+w/4,w/12)
         init {
             for(i in 0..63) {
                 squares.add(ChessBoardSquare(i))
@@ -55,12 +56,19 @@ class ImageChessBoardFilterView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             squares.forEach {
                 it.draw(canvas,paint,w,state.scale)
             }
+            pieArc.draw(canvas,paint,state.scale)
         }
         fun update(stopcb:(Float)->Unit) {
             state.update(stopcb)
         }
         fun startUpdating(startcb:()->Unit) {
             state.startUpdating(startcb)
+        }
+    }
+    data class PieArc(var x:Float,var y:Float,var r:Float) {
+        fun draw(canvas:Canvas,paint:Paint,scale:Float) {
+            paint.color = Color.parseColor("#4527A0")
+            canvas.drawArc(RectF(x-r,y-r,x+r,y+r),0f,360f*scale,true,paint)
         }
     }
     data class ChessBoardSquareState(var scale:Float = 0f,var dir:Float = 0f,var prevScale:Float = 0f) {
