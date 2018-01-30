@@ -11,13 +11,15 @@ import java.util.concurrent.ConcurrentLinkedQueue
 
 val bw_colors:Array<String> = arrayOf("000000","ffffff")
 class AlternateChessBoardView(ctx:Context,var bitmap:Bitmap):View(ctx) {
+    val renderer = AlternateChessBoardRenderer(this)
+    val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     override fun onDraw(canvas:Canvas) {
-
+        renderer.render(canvas,paint)
     }
     override fun onTouchEvent(event:MotionEvent):Boolean {
         when(event.action) {
             MotionEvent.ACTION_DOWN -> {
-
+                renderer.handleTap()
             }
         }
         return true
@@ -127,7 +129,7 @@ class AlternateChessBoardView(ctx:Context,var bitmap:Bitmap):View(ctx) {
         fun create(activity:Activity,bitmap:Bitmap):AlternateChessBoardView {
             val view = AlternateChessBoardView(activity,bitmap)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
