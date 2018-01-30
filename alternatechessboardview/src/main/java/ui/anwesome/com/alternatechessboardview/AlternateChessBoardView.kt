@@ -3,6 +3,7 @@ package ui.anwesome.com.alternatechessboardview
 /**
  * Created by anweshmishra on 30/01/18.
  */
+import android.app.Activity
 import android.view.*
 import android.content.*
 import android.graphics.*
@@ -120,6 +121,13 @@ class AlternateChessBoardView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             image?.startUpdating {
                 animator.start()
             }
+        }
+    }
+    companion object {
+        fun create(activity:Activity,bitmap:Bitmap):AlternateChessBoardView {
+            val view = AlternateChessBoardView(activity,bitmap)
+            activity.setContentView(view)
+            return view 
         }
     }
 }
