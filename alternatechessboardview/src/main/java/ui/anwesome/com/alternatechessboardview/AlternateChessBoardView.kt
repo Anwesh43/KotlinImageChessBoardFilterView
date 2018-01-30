@@ -29,7 +29,7 @@ class AlternateChessBoardView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             val x = (i%8)*w
             val updated_scale = scale+(1-2*scale)*(i%2)
             val y = (i/8)*w
-            paint.color = Color.parseColor("#AA${bw_colors[(i%2+(i/8)%2)]}")
+            paint.color = Color.parseColor("#AA${bw_colors[(i%2+(i/8))%2]}")
             canvas.save()
             canvas.translate(x+w/2,y+w/2)
             canvas.scale(updated_scale,updated_scale)
