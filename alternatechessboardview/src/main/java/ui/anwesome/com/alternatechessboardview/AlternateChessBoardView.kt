@@ -36,6 +36,7 @@ class AlternateChessBoardView(ctx:Context,var bitmap:Bitmap):View(ctx) {
     }
     data class AlternateChessSquareImage(var bitmap:Bitmap,var w:Float) {
         val squares:ConcurrentLinkedQueue<AlternateChessSquare> = ConcurrentLinkedQueue()
+        val state:AlternateChessSquareState = AlternateChessSquareState()
         init {
             bitmap = Bitmap.createScaledBitmap(bitmap,w.toInt(),w.toInt(),true)
             for(i in 0..63) {
@@ -46,14 +47,14 @@ class AlternateChessBoardView(ctx:Context,var bitmap:Bitmap):View(ctx) {
             paint.color = Color.BLACK
             canvas.drawBitmap(bitmap,0f,0f,paint)
             squares.forEach {
-                it.draw(canvas,paint,w/8,1f)
+                it.draw(canvas,paint,w/8,state.scale)
             }
         }
         fun update(stopcb:(Float)->Unit) {
-
+            state.update(stopcb)
         }
         fun startUpdating(startcb:()->Unit) {
-
+            state.startUpdating(startcb)
         }
     }
     data class AlternateChessSquareState(var scale:Float = 0f,var dir:Float = 0f,var prevScale:Float = 0f) {
